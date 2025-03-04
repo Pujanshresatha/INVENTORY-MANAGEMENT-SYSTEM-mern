@@ -9,12 +9,14 @@ const Login: React.FC = () => {
     password: '',
   });
   const [error, setError] = useState('');
+  const [success, setSuccess] = useState('');
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
 
   const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     setError('');
+    setSuccess('');
     setLoading(true);
 
     if (!formData.email || !formData.password) {
@@ -35,7 +37,11 @@ const Login: React.FC = () => {
         throw new Error(data.message || 'Login failed');
       }
 
-      navigate('/');
+      localStorage.setItem('token', data.token);
+      localStorage.setItem('user', JSON.stringify(data.user));
+
+      setSuccess('Login successful! Redirecting to dashboard...');
+      setTimeout(() => navigate('/dashboard'), 2000); // Redirect to /dashboard
     } catch (err) {
       setError((err as Error).message || 'Something went wrong');
     } finally {
@@ -80,6 +86,20 @@ const Login: React.FC = () => {
             }}
           >
             {error}
+          </div>
+        )}
+        {success && (
+          <div
+            className="success-message"
+            style={{
+              color: '#28a745',
+              marginBottom: '1rem',
+              padding: '0.5rem',
+              backgroundColor: '#d4edda',
+              borderRadius: '4px',
+            }}
+          >
+            {success}
           </div>
         )}
 

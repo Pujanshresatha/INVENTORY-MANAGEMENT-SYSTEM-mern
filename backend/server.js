@@ -3,6 +3,7 @@ const cors = require("cors");
 const dotenv = require("dotenv");
 const connectDB = require("../backend/src/config/db");
 const authRoutes = require("../backend/src/routes/authRoutes");
+const inventoryRoutes = require('./src/routes/inventoryRoutes');
 
 dotenv.config();
 connectDB(); // Ensure DB connects before starting the server
@@ -23,5 +24,6 @@ app.use(express.json()); // To parse JSON bodies
 
 // Routes
 app.use("/api/auth", authRoutes);
+app.use('/api/inventory', inventoryRoutes);
 
 app.listen(PORT, () => console.log(`Server is running on port ${PORT}`));
