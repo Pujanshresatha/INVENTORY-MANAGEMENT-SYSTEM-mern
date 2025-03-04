@@ -1,20 +1,23 @@
-const ApiError = require("../utils/ApiError")
+const ApiError = require("../utils/ApiError");
 
-const ErrorHandling=(err,req,res,next)=>{
-    const obj ={}
-    if(err instanceof ApiError){
-        obj['statusCode']=err.statusCode
-        obj['message']=err.message
-        obj['stack']=err.stack
+const ErrorHandling = (err, req, res, next) => {
+    // Ensure a valid status code (default to 500 for unknown errors)
+    const statusCode = err instanceof ApiError ? err.statusCode || 400 : 500;
 
+    const errorResponse = {
+        success: false,
+        statusCode,
+        message: err.message || 'Internal server error',
+    };
 
-
-    }else{
-        obj['statusCode']=400
-        obj['message']=err.message
-        obj['stack']=err.stack
+    // Add stack trace only in development mode
+    if (process.env.NODE_ENV !== 'production') {
+        errorResponse.stack = err.stack;
     }
-    res.status(obj.statusCode).json(obj)
-}
 
-module.exports= ErrorHandling
+    console.error("Error Occurred: ", errorResponse); // Log the error
+
+    res.status(statusCode).json(errorResponse);
+};
+
+module.exports = ErrorHandling;
