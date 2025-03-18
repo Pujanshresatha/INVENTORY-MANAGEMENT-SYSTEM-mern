@@ -4,7 +4,7 @@ import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-d
 import LandingPage from './pages/LandingPage';
 import Signup from './pages/Signup';
 import Login from './pages/Login';
-import Dashboard from './pages/Dashboard';
+import Dashboard from './pages/CustomerDashboard';
 
 // Simple route protection component
 const ProtectedRoute: React.FC<{ children: React.ReactNode }> = ({ children }) => {

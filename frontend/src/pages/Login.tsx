@@ -70,10 +70,19 @@ const Login: React.FC = () => {
       </h2>
 
       <form
-        onSubmit={handleSubmit}
-        className="login-form"
-        style={{ width: '100%', maxWidth: '400px' }}
-      >
+  onSubmit={handleSubmit}
+  className="login-form"
+  style={{
+    width: '100%',
+    maxWidth: '400px',
+    padding: '2rem',
+    border: '2px solid #333', // Add border
+    borderRadius: '0px', // Remove rounded corners for a square look
+    backgroundColor: '#fff',
+    boxShadow: '2px 2px 10px rgba(0, 0, 0, 0.1)',
+  }}
+>
+
         {error && (
           <div
             className="error-message"
